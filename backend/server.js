@@ -25,7 +25,7 @@ passportConfig(passport);
 // // routes
 // app.use('/api/auth', authRoutes)
 
-// Connection
+// Connection.
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
