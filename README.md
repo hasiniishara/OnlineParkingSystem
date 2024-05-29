@@ -11,4 +11,5 @@
     4. npm i bcryptjs jsonwebtoken 
     5. npm i passport-jwt
 
+*To run frontend npm run dev
 *To run backend npm run dev
