@@ -10,6 +10,7 @@
     3. npm install express mongoose dotenv nodemon 
     4. npm i bcryptjs jsonwebtoken 
     5. npm i passport-jwt
+    6. npm install passport
 
 *To run frontend npm run dev
 *To run backend npm run dev
