@@ -7,7 +7,7 @@
     
     3. Material UI installation - npm install @mui/material @emotion/react @emotion/styled and npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
-#Setup backend part 
+#Setup backend part - Javascript
 
     1. npm init -y 
 
@@ -21,6 +21,15 @@
 
     6. npm install passport
 
+#Migrate backend javascript to typescript
+
+    1. npm install --save-dev typescript ts-node @types/node @types/express @types/mongodb
+
+    2. npx tsc --init 
+
+    3. npm install --save-dev @types/passport @types/passport-jwt @types/mongoose
+
+    4. npm install dotenv  
 
 *To run frontend npm run dev
 
