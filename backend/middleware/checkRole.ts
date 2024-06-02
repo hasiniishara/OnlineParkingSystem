@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 
-// Define a type for the User object, assuming it has an id and roles property
+
+//define the user type object
 interface User {
   id: string;
   roles: string[];
 }
 
-// Extend the Express Request interface to include the user property
+// express request
 interface RequestWithUser extends Request {
   user?: User;
 }

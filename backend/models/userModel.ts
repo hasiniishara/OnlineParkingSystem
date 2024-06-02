@@ -1,14 +1,17 @@
 import mongoose, { Document } from 'mongoose';
 
+
+//define user data type
 export interface UserDocument extends Document {
   firstname: string;
   lastname: string;
   username: string;
   password: string;
-  email?: string; // Make email optional
+  email?: string; 
   roles: string[];
 }
 
+//create user
 const userSchema = new mongoose.Schema<UserDocument>(
   {
     firstname: { type: String, required: true },

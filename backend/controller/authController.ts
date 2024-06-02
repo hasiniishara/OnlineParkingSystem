@@ -3,6 +3,9 @@ import User, { UserDocument } from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+
+//User regristration fucntion
+
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { firstname, lastname, username, password, email, roles } = req.body;
 
@@ -17,6 +20,9 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+
+//User login function
+
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
   try {
@@ -25,13 +31,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const user: UserDocument | null = await User.findOne({ username });
     if (!user) {
       res.status(400).json({ message: "Credentials Invalid" });
-      return; // Ensure no further code execution after sending response
+      return; 
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       res.status(400).json({ message: "Credentials Invalid" });
-      return; // Ensure no further code execution after sending response
+      return; 
     }
 
     if (!process.env.JWT_SECRET) throw new Error("JWT secret is not defined");
