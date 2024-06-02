@@ -1,11 +1,13 @@
 # OnlineParkingSystem
 #Frontend creation
 
-    1. npm installation - npm create vite@latest
-
-    2. react dom installation - npm install react-router-dom
+    1. create typescript frontend - npm create vite@latest
     
-    3. Material UI installation - npm install @mui/material @emotion/react @emotion/styled and npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+    2. npm installation - npm install
+
+    3. react dom installation - npm install react-router-dom
+    
+    4. Material UI installation - npm install @mui/material @emotion/react @emotion/styled and npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
 #Setup backend part - Javascript
 
