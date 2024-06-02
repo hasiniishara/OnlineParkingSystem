@@ -4,7 +4,7 @@ import User from '../models/userModel';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: '', // Placeholder, will be set in the exported function
+  secretOrKey: '', 
 };
 
 export default (passport: PassportStatic, jwtSecret: string) => {
