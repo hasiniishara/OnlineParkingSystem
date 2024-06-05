@@ -16,13 +16,29 @@ if (!mongoUri || !port || !jwtSecret) {
   throw new Error("Missing required environment variables");
 }
 
+const cors = require('cors');
 // Initialize Express app
 const app = express();
 
 // Passport configuration
 passportConfig(passport, jwtSecret);
 
+const allowedLinks = ["http://localhost:5173"];
+
+const corsOptions = {
+  origin: function (origin, callback){
+    if(allowedLinks.indexOf(origin) !== -1 || !origin){
+      callback(null, true)
+    }else{
+      callback(new Error('CORS violation'))
+    }
+  },
+  optionSuccessStatus:200,
+  credentials: true
+}
+
 // Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(passport.initialize());
 app.use((req, res, next) => {

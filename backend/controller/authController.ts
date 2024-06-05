@@ -25,6 +25,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
+  console.log(req.body);
   try {
     if (!password || !username)
       throw new Error("Password & username is required");
@@ -55,5 +56,26 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   } catch (error: any) {
     console.error("Login error: ", error.message);
     res.status(400).json({ message: error.message });
+  }
+};
+
+interface DecodedToken {
+  id: string;
+  roles: string[];
+}
+
+export const verifyToken = async (req: Request, res: Response): Promise<Response> => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as DecodedToken;
+    return res.status(200).json({ message: "Token is valid", user: { id: decoded.id, roles: decoded.roles } });
+  } catch (error: any) {
+    return res.status(401).json({ message: error.message });
   }
 };
