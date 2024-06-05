@@ -9,6 +9,7 @@
     
     4. Material UI installation - npm install @mui/material @emotion/react @emotion/styled and npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
+
 #Setup backend part - Javascript
 
     1. npm init -y 
@@ -22,6 +23,8 @@
     5. npm i passport-jwt
 
     6. npm install passport
+
+    7. Install cors - npm i cors
 
 #Migrate backend javascript to typescript
 
