@@ -10,13 +10,43 @@ import {
   Grid,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const {login} = useAuth();
+  const navigate = useNavigate();
 
-  const handleLogin = () => {};
+  const handleLogin = async (e: React.ChangeEvent<EventTarget>) => {
+    e.preventDefault();
+    setError('');
+    
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({username, password})
+      });
+      const data = await response.json();
+      console.log(data);
+
+      if(response.ok) {
+        login(data.token);
+        console.log(data);
+        navigate('/dashboard');
+      }else{
+        throw new Error(data.message || 'Login Failed');
+      }
+    }catch(err:any){
+      setError(err.message);
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -35,45 +65,48 @@ export default function Login() {
           </Avatar>
           <Typography variant="h5">Sign In</Typography>
           <Box sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="User Name"
-              name="username"
-              autoFocus
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
-            />
+            <form onSubmit={handleLogin}>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                label="User Name"
+                name="username"
+                autoFocus
+                value={username}
+                onChange={(e) => setUserName(e.target.value)}
+              />
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="password"
+                name="password"
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
 
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={handleLogin}
-            >
-              Sign In
-            </Button>
-            <Grid container justifyContent={"flex-end"}>
-              <Grid item>
-                <Link to="/signup">Don't have an account? Register</Link>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign In
+              </Button>
+              {error && <p>{error}</p>}
+              <Grid container justifyContent={"flex-end"}>
+                <Grid item>
+                  <Link to="/signup">Don't have an account? Register</Link>
+                </Grid>
               </Grid>
-            </Grid>
+            </form>
           </Box>
         </Box>
       </Container>
