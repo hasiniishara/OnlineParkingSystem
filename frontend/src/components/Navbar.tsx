@@ -8,12 +8,18 @@ import Button from '@mui/material/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const navItems = [
+const navItems1 = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
   { label: 'Sign In', path: '/signin' },
   { label: 'Sign Up', path: '/signup' }
+];
+
+const navItems2 = [
+  { label: 'Home', path: '/' },
+  { label: 'About', path: '/about' },
+  { label: 'Contact', path: '/contact' },
 ];
 
 export default function Navbar() {
@@ -40,11 +46,18 @@ export default function Navbar() {
           </Typography>
           <Box>
             {isAuthenticated? (
-              <Button sx={{ color: '#fff' }} onClick={handleLogout}>
-              Logout
-              </Button>
+              <>
+                {navItems2.map((item) => (
+                  <Button key={item.label} sx={{ color: '#fff' }} component={Link} to={item.path}>
+                  {item.label}
+                  </Button>
+                ))}
+                <Button sx={{ color: '#fff' }} onClick={handleLogout}>
+                Sign Out
+                </Button>
+              </>
             ) : (
-              navItems.map((item) => (
+              navItems1.map((item) => (
                 <Button key={item.label} sx={{ color: '#fff' }} component={Link} to={item.path}>
                   {item.label}
                 </Button>
