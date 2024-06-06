@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema<UserDocument>(
     lastname: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    email: { type: String, unique: true },
+    email: { type: String, required: true, unique: true },
     roles: { type: [String], default: ['Employee'] }
   },
   { timestamps: true }
