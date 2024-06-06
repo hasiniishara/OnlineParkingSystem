@@ -7,10 +7,12 @@ import {
   Grid,
   TextField,
   Typography,
+  Alert
 } from "@mui/material";
 import { LockOutlined } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useRegisterUser from "../hooks/useRegisterUser";
 
 export default function Register(){
   const [firstname, setFirstName] = useState("");
@@ -18,8 +20,14 @@ export default function Register(){
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { registerUser, error, success } = useRegisterUser();
 
-  const handleRegister = async () => {};
+
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    registerUser(firstname, lastname, username, email, password);
+
+  };
 
   return (
     <>
@@ -37,7 +45,7 @@ export default function Register(){
             <LockOutlined />
           </Avatar>
           <Typography variant="h5">Sign Up</Typography>
-          <Box sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={handleRegister} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -103,13 +111,15 @@ export default function Register(){
               </Grid>
             </Grid>
             <Button
+              type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleRegister}
             >
               Sign Up
             </Button>
+              {error && <Alert variant="filled" severity="error">{error}</Alert>}
+              {success && <Alert variant="filled" severity="success">{success}</Alert>}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link to="/signin">Already have an account? Login</Link>
