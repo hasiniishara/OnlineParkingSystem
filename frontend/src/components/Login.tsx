@@ -8,6 +8,8 @@ import {
   TextField,
   Button,
   Grid,
+  Alert,
+  LinearProgress
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -16,7 +18,7 @@ import useLoginUser from "../hooks/useLoginUser";
 export default function Login() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const { loginUser, error } = useLoginUser();
+  const { loginUser, error, success } = useLoginUser();
   
 
   const handleLogin = async (e: React.ChangeEvent<EventTarget>) => {
@@ -77,7 +79,8 @@ export default function Login() {
               >
                 Sign In
               </Button>
-              {error && <p style={{color:'red'}}>{error}</p>}
+              {error && <Alert variant="filled" severity="error">{error}</Alert>}
+              {success && <LinearProgress color="success" />}
               <Grid container justifyContent={"flex-end"}>
                 <Grid item>
                   <Link to="/signup">Don't have an account? Register</Link>
