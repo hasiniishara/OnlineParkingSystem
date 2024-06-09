@@ -26,8 +26,18 @@ export default function Register(){
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     registerUser(firstname, lastname, username, email, password);
-
   };
+
+  useEffect(()=>{
+    if(success){
+      setFirstName('');
+      setLastName('');
+      setUserName('');
+      setEmail('');
+      setPassword('');
+      }
+  },[success]);
+
 
   return (
     <>
