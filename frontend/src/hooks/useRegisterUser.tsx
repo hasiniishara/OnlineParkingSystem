@@ -40,7 +40,9 @@ export default function useRegisterUser ():RegisterUserHook {
           if(response.ok) {
             console.log(data);
             setSuccess('Registration Success!');
-            navigate('/signin');
+            setTimeout(() => {
+              setSuccess('');
+            }, 3000);
           }else{
             throw new Error(data.message || 'Registration Failed');
           }
