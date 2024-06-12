@@ -11,6 +11,9 @@ import {
   CardMedia,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import park1 from '../images/p1.jpg';
+import park2 from '../images/p2.jpg';
+import park3 from '../images/p3.jpg';
 
 //import parkingImage from './parking.jpg';
 
@@ -32,8 +35,8 @@ const Home: React.FC = () => {
             <Card>
               <CardMedia
                 component="img"
-                height="200"
-                //image={parkingImage}
+                height="220"
+                image={park1}
                 alt="Parking"
               />
               <CardContent>
@@ -50,8 +53,8 @@ const Home: React.FC = () => {
             <Card>
               <CardMedia
                 component="img"
-                height="200"
-                //image={parkingImage}
+                height="190"
+                image={park2}
                 alt="Parking"
               />
               <CardContent>
@@ -68,8 +71,8 @@ const Home: React.FC = () => {
             <Card>
               <CardMedia
                 component="img"
-                height="200"
-                //image={parkingImage}
+                height="240"
+                image={park3}
                 alt="Parking"
               />
               <CardContent>
@@ -88,7 +91,7 @@ const Home: React.FC = () => {
             variant="contained"
             color="primary"
             component={Link}
-            to="/register"
+            to="/signup"
             sx={{ mr: 2 }}
           >
             Sign Up
