@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import User, { UserDocument } from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+const mongoose = require("mongoose");
 
 
 //User regristration fucntion
@@ -58,6 +59,25 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     res.status(400).json({ message: error.message });
   }
 };
+
+//View employee profile data
+export const employeeProfile = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)){
+      res.status(404).send(`No employee with id: ${id}`);
+      return;
+  }
+  try {
+    const employee = await User.findById(id);
+    res.status(200).json(employee);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+
+
 
 interface DecodedToken {
   id: string;
