@@ -20,6 +20,7 @@ const navItems2 = [
   { label: 'Home', path: '/' },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
+  { label: 'Dashboard', path: '/dashboard' },
 ];
 
 export default function Navbar() {

@@ -4,7 +4,8 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (token: string) => void;
+  userRole: string | null;
+  login: (token: string, role: string) => void;
   logout: () => void;
   verifyToken: () => Promise<void>;
 }
@@ -15,6 +16,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
  
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [isLoading, setIsLoading] = useState(true);
+const [userRole, setUserRole] = useState<string | null>(null);
 
 
 
@@ -34,7 +36,10 @@ const verifyToken = async()=>{
       }
     });
     if(response.ok){
+      const data = await response.json();
       setIsAuthenticated(true);
+      setUserRole(data.role[0]);
+      console.log('Verified role:', data.role[0]);
     }else{
       localStorage.removeItem('token');
       setIsAuthenticated(false);
@@ -50,18 +55,20 @@ useEffect(()=>{
   verifyToken()
 }, []);
 
-const login = (token: string) =>{
+const login = (token: string, role:string) =>{
   localStorage.setItem('token', token);
-  setIsAuthenticated(true)
+  setIsAuthenticated(true);
+  setUserRole(role);
 };
 
 const logout =() =>{
   localStorage.removeItem('token');
   setIsAuthenticated(false)
+  setUserRole(null);
 };
 
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, isAuthenticated, verifyToken}}>
+    <AuthContext.Provider value={{ login, logout, isLoading, isAuthenticated, userRole, verifyToken}}>
         {children}
     </AuthContext.Provider>
   )

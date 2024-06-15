@@ -15,7 +15,6 @@ import park1 from '../images/p1.jpg';
 import park2 from '../images/p2.jpg';
 import park3 from '../images/p3.jpg';
 
-//import parkingImage from './parking.jpg';
 
 const Home: React.FC = () => {
   return (
@@ -37,7 +36,7 @@ const Home: React.FC = () => {
                 component="img"
                 height="220"
                 image={park1}
-                alt="Parking"
+                alt="Parking1"
               />
               <CardContent>
                 <Typography variant="h6" component="h2" gutterBottom>
@@ -55,7 +54,7 @@ const Home: React.FC = () => {
                 component="img"
                 height="190"
                 image={park2}
-                alt="Parking"
+                alt="Parking2"
               />
               <CardContent>
                 <Typography variant="h6" component="h2" gutterBottom>
@@ -73,7 +72,7 @@ const Home: React.FC = () => {
                 component="img"
                 height="240"
                 image={park3}
-                alt="Parking"
+                alt="Parking3"
               />
               <CardContent>
                 <Typography variant="h6" component="h2" gutterBottom>
