@@ -1,51 +1,107 @@
+import { LockOutlined } from '@mui/icons-material';
 import {
-    Container,
-    Box,
-    Typography,
-    Grid,
-    Button,
-    CssBaseline,
-    Card,
-    CardContent,
-    CardMedia,
-  } from '@mui/material';
-  import { Link } from 'react-router-dom';
-  import pro1 from '../images/profile1.png';
-  
-  
-  export default function Profile() {
-    return (
-        <Container maxWidth="lg">
-          <CssBaseline />
-          <Box sx={{ mt: 20, mb: 4 }}>
-            <Grid container spacing={4} alignItems="center" justifyContent="center">
-              <Grid item xs={12} sm={6} md={4}>
-                <Card>
-                  <CardMedia
-                    component="img"
-                    height="180"
-                    image={pro1}
-                    alt="Profile1"
-                    style={{ width: '150px', height: '150px' }}
-                  />
-                  <CardContent style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      component={Link}
-                      to="/signup"
-                      sx={{ mr: 2 }}
-                    >
-                      User Profile
-                    </Button> 
-                  </CardContent>
-                </Card>
+  Container,
+  Box,
+  Typography,
+  Grid,
+  Avatar,
+  TextField,
+  Button,
+} from '@mui/material';
+import { useEffect } from "react";
+import useFetchProfile from "../hooks/useFetchProfile";
+
+export default function Profile() {
+  const { profile, error, success, viewUser } = useFetchProfile();
+
+  useEffect(() => {
+    viewUser();
+  }, []);
+
+  return (
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <LockOutlined />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Profile
+        </Typography>
+        {error && <Typography color="error">{error}</Typography>}
+        {profile && (
+          <Box component="form" sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography>
+                  <TextField
+                  name="firstname"
+                  required
+                  fullWidth
+                  id="firstname"
+                  label="First Name"
+                  autoFocus
+                  value={profile.firstname}
+                />
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>
+                <TextField
+                  name="lastname"
+                  required
+                  fullWidth
+                  id="lastname"
+                  label="Last Name"
+                  autoFocus
+                  value={profile.lastname}
+                />
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>
+                <TextField
+                  name="username"
+                  required
+                  fullWidth
+                  id="username"
+                  label="User Name"
+                  autoFocus
+                  value={profile.username}
+                />
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>
+                <TextField
+                  name="email"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  autoFocus
+                  value={profile.email}
+                />
+                </Typography>
               </Grid>
             </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Update
+            </Button>
           </Box>
-        </Container>
-      );
-  }
-  
-  
-  
+        )}
+      </Box>
+    </Container>
+  );
+}
