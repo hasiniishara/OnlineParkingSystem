@@ -53,7 +53,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    res.json({ token });
+    res.json({ token, role: user.roles });
   } catch (error: any) {
     console.error("Login error: ", error.message);
     res.status(400).json({ message: error.message });

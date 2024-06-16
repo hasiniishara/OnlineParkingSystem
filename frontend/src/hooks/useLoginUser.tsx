@@ -31,7 +31,7 @@ export default function useLoginUser ():LoginUserHook {
           console.log(data);
     
           if(response.ok) {
-            login(data.token);
+            login(data.token, data.role[0]);
             console.log(data);
             setSuccess('Login Successfully!');
             navigate('/dashboard');

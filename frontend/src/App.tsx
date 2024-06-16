@@ -9,6 +9,9 @@ import Register from './components/Register';
 import About from './components/About';
 import Contact from './components/Contact';
 import Dashboard from './components/Dashboard';
+import Profile from './components/Profile';
+import ParkingSlots from './components/ParkingSlots';
+import AddSlots from './components/AddSlots';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,6 +27,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/parkingslots" element={<ParkingSlots />} />
+          <Route path="/addslots" element={<AddSlots />} />
           <Route path="*" element={<Home />} />
         </Routes>
         <Footer />

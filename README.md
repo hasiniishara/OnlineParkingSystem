@@ -34,7 +34,9 @@
 
     3. npm install --save-dev @types/passport @types/passport-jwt @types/mongoose
 
-    4. npm install dotenv  
+    4. npm install dotenv 
+
+    5. npm install @types/jwt-decode --save-dev 
 
 *To run frontend npm run dev
 
