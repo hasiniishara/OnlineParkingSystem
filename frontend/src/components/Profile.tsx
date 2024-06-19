@@ -7,16 +7,80 @@ import {
   Avatar,
   TextField,
   Button,
+  DialogActions,
+  DialogContent,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  CircularProgress,
 } from '@mui/material';
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import useFetchProfile from "../hooks/useFetchProfile";
 
 export default function Profile() {
-  const { profile, error, success, viewUser } = useFetchProfile();
+  const { profile, error, success, viewUser, updateUser } = useFetchProfile();
+  const [firstname, setFirstName] = useState<string>("");
+  const [lastname, setLastName] = useState<string>("");
+  const [username, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    viewUser();
-  }, []);
+    const fetchProfile = async () => {
+      await viewUser();
+      setLoading(false);
+    };
+    fetchProfile();
+  }, [viewUser]);
+
+  useEffect(() => {
+    if (profile && !editMode) {
+      setFirstName(profile.firstname);
+      setLastName(profile.lastname);
+      setUserName(profile.username);
+      setEmail(profile.email);
+    }
+  }, [profile, editMode]);
+
+  const handleUpdate = (e: any) => {
+    e.preventDefault();
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
+  const handleDialogConfirm = async () => {
+    setOpenDialog(false);
+    setLoading(true);
+    try {
+      const updatedProfile = { firstname, lastname, username, email };
+      await updateUser(updatedProfile);
+      console.log('Profile updated:', updatedProfile);
+      setEditMode(false);
+    } catch (err) {
+      console.error("Failed to update profile", err);
+    }
+    setLoading(false);
+  };
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -36,72 +100,92 @@ export default function Profile() {
         </Typography>
         {error && <Typography color="error">{error}</Typography>}
         {profile && (
-          <Box component="form" sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography>
-                  <TextField
-                  name="firstname"
-                  required
+                <TextField
+                  variant="outlined"
                   fullWidth
                   id="firstname"
                   label="First Name"
-                  autoFocus
-                  value={profile.firstname}
+                  value={firstname}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  disabled={!editMode}
                 />
-                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
                 <TextField
-                  name="lastname"
-                  required
+                  variant="outlined"
                   fullWidth
                   id="lastname"
                   label="Last Name"
-                  autoFocus
-                  value={profile.lastname}
+                  value={lastname}
+                  onChange={(e) => setLastName(e.target.value)}
+                  disabled={!editMode}
                 />
-                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
                 <TextField
-                  name="username"
-                  required
+                  variant="outlined"
                   fullWidth
                   id="username"
-                  label="User Name"
-                  autoFocus
-                  value={profile.username}
+                  label="Username"
+                  value={username}
+                  onChange={(e) => setUserName(e.target.value)}
+                  disabled={!editMode}
                 />
-                </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography>
                 <TextField
-                  name="email"
-                  required
+                  variant="outlined"
                   fullWidth
                   id="email"
-                  label="Email"
-                  autoFocus
-                  value={profile.email}
+                  label="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={!editMode}
                 />
-                </Typography>
               </Grid>
             </Grid>
             <Button
-              type="submit"
-              fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={() => setEditMode(true)}
+              disabled={editMode}
             >
-              Update
+              Edit Profile
             </Button>
+            {editMode && (
+              <Button
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleUpdate}
+              >
+                Update Profile
+              </Button>
+            )}
           </Box>
         )}
       </Box>
+      <Dialog
+        open={openDialog}
+        onClose={handleDialogClose}
+      >
+        <DialogTitle>Confirm Update</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Do you want to update your profile information?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose} color="primary">
+            No
+          </Button>
+          <Button onClick={handleDialogConfirm} color="primary">
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
