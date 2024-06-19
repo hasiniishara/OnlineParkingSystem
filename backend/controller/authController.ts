@@ -76,6 +76,27 @@ export const employeeProfile = async (req: Request, res: Response): Promise<void
   }
 };
 
+//Update employee profile data
+export const updateEmployee = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const { firstname, lastname, username, email } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)){
+    res.status(404).send(`No Employee with id: ${id}`);
+    return;
+  }
+  try {
+    const updatedEmployee = await User.findByIdAndUpdate(
+      id,
+      { firstname, lastname, username, email },
+      { new: true }
+    );
+    console.log('de');
+    console.log(updatedEmployee);
+    res.status(200).json(updatedEmployee);
+  } catch (error:any) {
+    res.status(400).json({ message: error.message });
+  }
+};
 
 
 
