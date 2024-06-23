@@ -90,7 +90,7 @@ export default function useFetchProfile(): UserProfileHook {
 
   const updateUser = async (updatedProfile: UpdateUserProfile) => {
     setError("");
-  setSuccess("");
+    setSuccess("");
 
   try {
     const token = localStorage.getItem("token");

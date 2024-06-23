@@ -5,6 +5,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import authRoutes from './routes/authRoute';
+import parkinghRoutes from './routes/parkingRoutes';
 import passportConfig from './middleware/passportConfig';
 
 // Check required environment variables
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/parking', parkinghRoutes);
 
 // Connect to MongoDB and start the server
 mongoose

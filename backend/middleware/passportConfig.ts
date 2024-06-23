@@ -1,13 +1,13 @@
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
-import { PassportStatic } from 'passport';
-import User from '../models/userModel';
+import passport, { PassportStatic } from 'passport';
+import User, { UserDocument } from '../models/userModel';
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: '', 
 };
 
-export default (passport: PassportStatic, jwtSecret: string) => {
+export default (passport: passport.PassportStatic, jwtSecret: string) => {
   if (!jwtSecret) {
     throw new Error('JWT secret is not defined');
   }
