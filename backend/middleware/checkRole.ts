@@ -8,11 +8,11 @@ interface User {
 }
 
 // express request
-interface RequestWithUser extends Request {
+export interface RequestWithUser extends Request {
   user?: User;
 }
 
-const checkRoles = (requiredRoles: string[]) => (req: RequestWithUser, res: Response, next: NextFunction) => {
+export const checkRoles = (requiredRoles: string[]) => (req: RequestWithUser, res: Response, next: NextFunction) => {
   const userRoles = req.user?.roles;
 
   if (!userRoles) {
@@ -28,4 +28,3 @@ const checkRoles = (requiredRoles: string[]) => (req: RequestWithUser, res: Resp
   next();
 };
 
-export default checkRoles;
