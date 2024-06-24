@@ -23,3 +23,14 @@ export const createParkingSlot = async (req: Request, res: Response) => {
       res.status(400).json({ error: error.message });
     }
   };
+
+//Get all parking slots
+
+export const getAllParkingSlots = async (req: Request, res: Response) => {
+  try {
+    const employees = await ParkingSlot.find({}).sort({ createdAt: -1 });
+    res.status(200).json(employees);
+  } catch (error:any) {
+    res.status(400).json({ message: error.message });
+  }
+};
