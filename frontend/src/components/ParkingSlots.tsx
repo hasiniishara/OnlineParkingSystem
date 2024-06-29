@@ -18,17 +18,20 @@ import {
 } from '@mui/material';
 import useFetchParkingSlots from '../hooks/useFetchParkingSlots';
 import useBookParkingSlot from '../hooks/useBookParkingSlot';
+import useDeleteSlot from '../hooks/useDeleteSlot';
 import { useAuth } from '../context/AuthContext';
 
 export default function ParkingSlots() {
   const { userRole } = useAuth();
   const { slots, viewSlots, error, success } = useFetchParkingSlots();
   const { bookSlot, error: bookError, success: bookSuccess, loading } = useBookParkingSlot();
+  const { deleteSlot, error: deleteError, success: deleteSuccess, deleteLoading } = useDeleteSlot();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('success');
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deletedDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
   const [vehicleNumber, setVehicleNumber] = useState('');
   const [reservedBy, setReservedBy] = useState('');
@@ -64,6 +67,15 @@ export default function ParkingSlots() {
     setReservationTime('');
   };
 
+  const handleOpenDeleteDialog = (slotId: string) => {
+    setSelectedSlotId(slotId);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleCloseDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+  };
+
   const handleBookSlot = async () => {
     if (selectedSlotId) {
       await bookSlot(selectedSlotId, vehicleNumber, reservedBy, reservationDate, reservationTime);
@@ -72,6 +84,14 @@ export default function ParkingSlots() {
     }
   };
 
+  const handleDeleteSlot= async () => {
+    if (selectedSlotId) {
+      await deleteSlot(selectedSlotId);
+      viewSlots();
+      handleCloseDeleteDialog();
+    }
+  };
+  
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
@@ -112,6 +132,17 @@ export default function ParkingSlots() {
                       disabled={loading}
                     >
                       {loading ? <CircularProgress size={24} /> : 'Book'}
+                    </Button>
+                  )}
+                  {userRole === 'Admin' && !slot.isOccupied &&(
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleOpenDeleteDialog(slot._id)}
+                      sx={{ mt: 2, ml:2 }}
+                      disabled={loading}
+                    >
+                      {loading ? <CircularProgress size={24} /> : 'Delete'}
                     </Button>
                   )}
                 </CardContent>
@@ -177,6 +208,22 @@ export default function ParkingSlots() {
             </Button>
             <Button onClick={handleBookSlot} color="primary" disabled={loading}>
               {loading ? <CircularProgress size={24} /> : 'Book'}
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog open={deletedDialogOpen} onClose={handleCloseDeleteDialog}>
+          <DialogTitle>Delete a parking slot</DialogTitle>
+          <DialogContent>
+            <Typography variant="body2" color="text.secondary">
+                Are you sure to delete?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDeleteDialog} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleDeleteSlot} color="primary" disabled={loading}>
+              {loading ? <CircularProgress size={24} /> : 'Delete'}
             </Button>
           </DialogActions>
         </Dialog>
