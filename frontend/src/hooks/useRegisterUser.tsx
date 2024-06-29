@@ -27,7 +27,7 @@ export default function useRegisterUser ():RegisterUserHook {
         }
 
         try {
-          const response = await fetch('http://localhost:3000/api/auth/register', {
+          const response = await fetch('https://onlineparkingsystem.onrender.com/api/auth/register', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

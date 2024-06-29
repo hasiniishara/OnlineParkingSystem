@@ -29,7 +29,7 @@ export default function useDeleteSlot(): DeleteParkingSlotHook {
       }
 
       console.log(slotId);
-      const response = await fetch(`http://localhost:3000/api/parking/${slotId}`, {
+      const response = await fetch(`https://onlineparkingsystem.onrender.com/api/parking/${slotId}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
