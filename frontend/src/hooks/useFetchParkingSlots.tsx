@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 interface FetchParkingSlotsHook {
   viewSlots: () => Promise<void>;
@@ -21,8 +19,6 @@ export default function useFetchParkingSlots(): FetchParkingSlotsHook {
   const [slots, setSlots] = useState<ParkingSlots[]>([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  
-  const navigate = useNavigate();
 
   const viewSlots = async (): Promise<void> => {
 

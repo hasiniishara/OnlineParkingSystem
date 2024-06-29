@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 interface UserProfileHook {
@@ -38,7 +37,6 @@ export default function useFetchProfile(): UserProfileHook {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   
-  const navigate = useNavigate();
 
   const viewUser = async (): Promise<void> => {
     setError("");
@@ -104,7 +102,7 @@ export default function useFetchProfile(): UserProfileHook {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json", // Ensure content type is specified
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedProfile),
     });

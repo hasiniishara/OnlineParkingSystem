@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import useFetchProfile from "../hooks/useFetchProfile";
 
 export default function Profile() {
-  const { profile, error, success, viewUser, updateUser } = useFetchProfile();
+  const { profile, error, viewUser, updateUser } = useFetchProfile();
   const [firstname, setFirstName] = useState<string>("");
   const [lastname, setLastName] = useState<string>("");
   const [username, setUserName] = useState<string>("");
