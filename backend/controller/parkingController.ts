@@ -61,3 +61,16 @@ export const bookParkingSlot = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+export const deleteSlot = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletedSlot = await ParkingSlot.findByIdAndDelete(id);
+    if (!deletedSlot) {
+      return res.status(404).json({ message: `No parking slot with id: ${id}` });
+    }
+    res.status(200).json({ message: "Slot deleted successfully" });
+  } catch (error:any) {
+    res.status(400).json({ message: error.message });
+  }
+};
