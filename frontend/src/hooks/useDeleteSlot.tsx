@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface DeleteParkingSlotHook {
   deleteSlot: (slotId: string) => Promise<void>;
@@ -13,7 +12,6 @@ export default function useDeleteSlot(): DeleteParkingSlotHook {
   const [success, setSuccess] = useState("");
   const [deleteLoading, setLoading] = useState(false);
   
-  const navigate = useNavigate();
 
   const deleteSlot = async (slotId: string): Promise<void> => {
 

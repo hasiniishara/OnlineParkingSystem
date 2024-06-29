@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Container,
   Box,
@@ -25,7 +25,7 @@ export default function ParkingSlots() {
   const { userRole } = useAuth();
   const { slots, viewSlots, error, success } = useFetchParkingSlots();
   const { bookSlot, error: bookError, success: bookSuccess, loading } = useBookParkingSlot();
-  const { deleteSlot, error: deleteError, success: deleteSuccess, deleteLoading } = useDeleteSlot();
+  const { deleteSlot} = useDeleteSlot();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');

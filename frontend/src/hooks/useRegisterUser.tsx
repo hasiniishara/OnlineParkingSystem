@@ -1,5 +1,4 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
 
 interface RegisterUserHook {
   registerUser: (firstname: string, lastname: string, username: string, email: string, password: string) => Promise<void>;
@@ -10,7 +9,6 @@ interface RegisterUserHook {
 export default function useRegisterUser ():RegisterUserHook {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
-    const navigate = useNavigate();
 
     const registerUser = async (firstname: string, lastname: string, username: string, email: string, password: string) => {
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 interface BookParkingSlotHook {
   bookSlot: (slotId: string, vehicleNumber: string, reservedBy: string, reservationDate: string, reservationTime: string) => Promise<void>;
@@ -12,8 +11,6 @@ export default function useBookParkingSlot(): BookParkingSlotHook {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  
-  const navigate = useNavigate();
 
   const bookSlot = async (slotId: string, vehicleNumber: string, reservedBy: string, reservationDate: string, reservationTime: string): Promise<void> => {
 
