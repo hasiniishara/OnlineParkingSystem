@@ -24,7 +24,7 @@ const app = express();
 // Passport configuration
 passportConfig(passport, jwtSecret);
 
-const allowedLinks = ["http://localhost:5173"];
+const allowedLinks = ["https://parkmeonline.netlify.app"];
 
 const corsOptions = {
   origin: function (origin, callback){
