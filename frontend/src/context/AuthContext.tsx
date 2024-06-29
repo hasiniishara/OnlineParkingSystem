@@ -30,7 +30,7 @@ const verifyToken = async()=>{
   }
 
   try{
-    const response = await fetch('http://localhost:3000/api/auth/verifyToken',{
+    const response = await fetch('https://onlineparkingsystem.onrender.com/api/auth/verifyToken',{
       headers:{
         'Authorization':`Bearer ${token}`
       }

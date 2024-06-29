@@ -35,7 +35,7 @@ export default function useFetchParkingSlots(): FetchParkingSlotsHook {
         throw new Error("No token found");
       }
 
-      const response = await fetch('http://localhost:3000/api/parking/viewAll', {
+      const response = await fetch('https://onlineparkingsystem.onrender.com/api/parking/viewAll', {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

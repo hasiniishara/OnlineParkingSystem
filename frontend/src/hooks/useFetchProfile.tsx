@@ -52,7 +52,7 @@ export default function useFetchProfile(): UserProfileHook {
 
       const decoded: DecodedToken = jwtDecode(token);
 
-      const response = await fetch(`http://localhost:3000/api/auth/${decoded.id}`, {
+      const response = await fetch(`https://onlineparkingsystem.onrender.com/api/auth/${decoded.id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

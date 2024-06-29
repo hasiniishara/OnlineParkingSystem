@@ -25,7 +25,7 @@ export default function useAddParkingSlot(): AddParkingSlotHook {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/parking/createParkingSlot', {
+      const response = await fetch('https://onlineparkingsystem.onrender.com/api/parking/createParkingSlot', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
